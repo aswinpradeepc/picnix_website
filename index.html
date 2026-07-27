@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Picnix — AI Trip Planner (currently napping)</title>
+  <meta name="description" content="Picnix is an AI-powered trip planner built with LangGraph that turns vague travel ideas into real itineraries. The live demo is paused — out of cloud credits — but the code and the story are still here." />
+  <meta name="keywords" content="Picnix, AI trip planner, trip planning app, LangGraph, LLM trip planner, AI itinerary generator, travel planner AI, LangGraph agent, itinerary builder, smart trip planner, Aswin Pradeep C" />
+  <meta name="author" content="Aswin Pradeep C" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://picnix.aswinpradeepc.com/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://picnix.aswinpradeepc.com/" />
+  <meta property="og:title" content="Picnix — AI Trip Planner (currently napping)" />
+  <meta property="og:description" content="AI-powered trip planner built with LangGraph. The live demo is paused — out of cloud credits — but the code and the story are still here." />
+  <meta property="og:site_name" content="Picnix" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@aswinpradeepc" />
+  <meta name="twitter:creator" content="@aswinpradeepc" />
+  <meta name="twitter:title" content="Picnix — AI Trip Planner (currently napping)" />
+  <meta name="twitter:description" content="AI-powered trip planner built with LangGraph. The live demo is paused — out of cloud credits — but the code and the story are still here." />
+
+  <meta name="theme-color" content="#000000" />
+
+  <!-- Favicon: inline SVG (tent emoji) — no external file needed -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9B%BA%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Picnix",
+    "applicationCategory": "TravelApplication",
+    "operatingSystem": "Web",
+    "description": "Picnix is an AI-powered trip planner built with LangGraph that turns vague travel ideas into real, day-by-day itineraries.",
+    "url": "https://picnix.aswinpradeepc.com/",
+    "author": {
+      "@type": "Person",
+      "name": "Aswin Pradeep C",
+      "url": "https://aswinpradeepc.com"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink:       #0f0f0f;
+      --ink-2:     #333333;
+      --muted:     #777777;
+      --faint:     #e9e9e9;
+      --faintest:  #f4f4f4;
+      --bg:        #ffffff;
+      --font:      'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono:      'DM Mono', 'SF Mono', 'Fira Code', monospace;
+      --max:       620px;
+      --ease:      cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .message {
+      font-size: 1rem;
+      color: var(--ink-2);
+      max-width: 480px;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .message .highlight {
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .aside {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 2.75rem;
+    }
+
+    /* ── BUTTONS ── */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .btn {
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      letter-spacing: 0.02em;
+      background: none;
+      border: 1px solid var(--ink);
+      padding: 0.6rem 1.25rem;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s var(--ease), color 0.15s var(--ease);
+    }
+
+    .btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── FOOTER ── */
+    #footer {
+      border-top: 1px solid var(--faint);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+    }
+
+    #footer a {
+      font-size: 0.8rem;
+      font-family: var(--mono);
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    #footer a:hover { color: var(--ink); }
+
+    /* ── FADE-IN ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.6s var(--ease) forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up:nth-child(1) { animation-delay: 0.05s; }
+    .fade-up:nth-child(2) { animation-delay: 0.12s; }
+    .fade-up:nth-child(3) { animation-delay: 0.19s; }
+    .fade-up:nth-child(4) { animation-delay: 0.26s; }
+    .fade-up:nth-child(5) { animation-delay: 0.33s; }
+
+    /* ── MOBILE: hide the "About Me" button ── */
+    @media (max-width: 600px) {
+      .btn-about { display: none; }
+      h1 { font-size: 1.6rem; }
+      main { padding: 3rem 1.25rem; }
+      .actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+      .btn { width: 100%; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-up { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <p class="kicker fade-up">Picnix · status: on vacation</p>
+
+  <h1 class="fade-up">Picnix took an unplanned trip of its own. &#9978;</h1>
+
+  <p class="message fade-up">
+    The live demo is off &rsquo;cause I <span class="highlight">ran out of cloud credits</span>.
+    The code and the story, however, are wide awake.
+  </p>
+
+  <div class="actions fade-up">
+    <a class="btn btn-code" href="https://github.com/aswinpradeepc/picnix" target="_blank" rel="noopener">View Code</a>
+    <a class="btn btn-blog" href="https://medium.com/@aswinpradeepc/why-rule-based-trip-planners-fail-and-what-i-built-with-langgraph-instead-c9ca78284cb5" target="_blank" rel="noopener">View Blog</a>
+    <a class="btn btn-about" href="https://aswinpradeepc.com" target="_blank" rel="noopener">About Me</a>
+  </div>
+</main>
+
+<footer id="footer">
+  <a href="https://aswinpradeepc.com" target="_blank" rel="noopener">aswinpradeepc.com</a>
+</footer>
+
+</body>
+</html>
