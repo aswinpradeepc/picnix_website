@@ -163,6 +163,28 @@
       color: var(--bg);
     }
 
+    /* primary CTA */
+    .btn-blog {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .btn-blog:hover {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .btn-blog .arrow {
+      transition: transform 0.15s var(--ease);
+    }
+
+    .btn-blog:hover .arrow { transform: translateX(3px); }
+
     /* ── FOOTER ── */
     #footer {
       border-top: 1px solid var(--faint);
@@ -226,8 +248,8 @@
   </p>
 
   <div class="actions fade-up">
+    <a class="btn btn-blog" href="https://medium.com/@aswinpradeepc/why-rule-based-trip-planners-fail-and-what-i-built-with-langgraph-instead-c9ca78284cb5" target="_blank" rel="noopener">Read the Build Story <span class="arrow" aria-hidden="true">&rarr;</span></a>
     <a class="btn btn-code" href="https://github.com/aswinpradeepc/picnix" target="_blank" rel="noopener">View Code</a>
-    <a class="btn btn-blog" href="https://medium.com/@aswinpradeepc/why-rule-based-trip-planners-fail-and-what-i-built-with-langgraph-instead-c9ca78284cb5" target="_blank" rel="noopener">View Blog</a>
     <a class="btn btn-about" href="https://aswinpradeepc.com" target="_blank" rel="noopener">About Me</a>
   </div>
 </main>
